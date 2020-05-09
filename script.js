@@ -1,18 +1,4 @@
 /**
- * @typedef {{
- *   ID: string,
- *   name_space: string,
- *   title_base64: string,
- *   snippet_base64: string,
- *   date_modified: string,
- *   attribution_base64: string,
- *   thumbnail_data_uri: string,
- *   favicon_data_uri: string,
- *   content_type: number,
- * }}
- */
-
-/**
  * T-Rex runner.
  * @param {string} outerContainerId Outer containing element id.
  * @param {!Object=} opt_config
@@ -343,6 +329,7 @@ Runner.prototype = {
     init() {
 
         this.containerEl = document.createElement('div');
+        //document.getElementById('runner-container');
         this.containerEl.className = Runner.classes.CONTAINER;
 
         this.activated = true;
@@ -352,6 +339,9 @@ Runner.prototype = {
         // Player canvas container.
         this.canvas = createCanvas(this.containerEl, this.dimensions.WIDTH,
             this.dimensions.HEIGHT);
+        //this.canvas = document.getElementById('runner-canvas');
+        //this.dimensions.WIDTH = this.canvas.width;
+
 
         this.canvasCtx =
             /** @type {CanvasRenderingContext2D} */ (this.canvas.getContext('2d'));
@@ -1036,8 +1026,8 @@ Runner.prototype = {
      */
     setArcadeModeContainerScale() {
         const windowHeight = window.innerHeight;
-        const scaleHeight = windowHeight / this.dimensions.HEIGHT;
-        const scaleWidth = window.innerWidth / this.dimensions.WIDTH;
+        const scaleHeight = windowHeight / (this.dimensions.HEIGHT + 30);
+        const scaleWidth = window.innerWidth / (this.dimensions.WIDTH + 30);
         const scale = Math.max(1, Math.min(scaleHeight, scaleWidth));
         const scaledCanvasHeight = this.dimensions.HEIGHT * scale;
         // Positions the game container at 10% of the available vertical window
@@ -2755,6 +2745,7 @@ function HorizonLine(canvas, spritePos) {
         /** @type {CanvasRenderingContext2D} */ (canvas.getContext('2d'));
     this.sourceDimensions = {};
     this.dimensions = HorizonLine.dimensions;
+    
     this.sourceXPos = [this.spritePos.x, this.spritePos.x +
     this.dimensions.WIDTH];
     this.xPos = [];
@@ -2771,7 +2762,7 @@ function HorizonLine(canvas, spritePos) {
  * @enum {number}
  */
 HorizonLine.dimensions = {
-    WIDTH: 600,
+    WIDTH: DEFAULT_WIDTH,
     HEIGHT: 12,
     YPOS: 127
 };
